@@ -128,6 +128,9 @@ export default class Slide{
     this.onEnd = this.onEnd.bind(this);
 
     this.onResize = debounce(this.onResize.bind(this), 200);
+
+    this.activePrevSlide = this.activePrevSlide.bind(this);
+    this.activeNextSlide = this.activeNextSlide.bind(this);
   }
 
   init(){
@@ -136,6 +139,20 @@ export default class Slide{
     this.addSlideEvent();
     this.slidesConfig();
     this.addResizeEvent();
+    this.changeSlide(0);
     return this;
+  }
+}
+
+export class SlideNav extends Slide{
+  addArrow(prev, next){
+    this.prevElement = document.querySelector(prev);
+    this.nextElement = document.querySelector(next);
+    this.addArrowEvent();
+  }
+
+  addArrowEvent(){
+    this.prevElement.addEventListener('click', this.activePrevSlide);
+    this.nextElement.addEventListener('click', this.activeNextSlide);
   }
 }
